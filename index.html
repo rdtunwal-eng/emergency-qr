@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Emergency Alert</title>
+</head>
+<body>
+  <h2>Emergency Location System</h2>
+  <p>Please allow location access.</p>
+
+  <script>
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        function(position) {
+          let lat = position.coords.latitude;
+          let lon = position.coords.longitude;
+
+          let mapLink = "https://maps.google.com/?q=" + lat + "," + lon;
+
+          document.body.innerHTML +=
+            "<p><b>Location captured successfully</b></p>" +
+            "<a href='" + mapLink + "' target='_blank'>Open Location in Google Maps</a>";
+        },
+        function(error) {
+          alert("Location permission denied");
+        }
+      );
+    } else {
+      alert("Geolocation not supported");
+    }
+  </script>
+</body>
+</html>
