@@ -5,29 +5,35 @@
 </head>
 <body>
   <h2>Emergency Alert System</h2>
-  <p>Please allow location access to send alert.</p>
+  <p>Please allow location access to send emergency alert.</p>
 
   <script>
-    navigator.geolocation.getCurrentPosition(function(pos) {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        function(position) {
+          let lat = position.coords.latitude;
+          let lon = position.coords.longitude;
 
-      let lat = pos.coords.latitude;
-      let lon = pos.coords.longitude;
+          let mapLink = "https://maps.google.com/?q=" + lat + "," + lon;
 
-      let mapLink = "https://maps.google.com/?q=" + lat + "," + lon;
+          let message =
+            "EMERGENCY ALERT%0A" +
+            "Possible accident situation.%0A" +
+            "Live Location:%0A" +
+            mapLink;
 
-      let message = 
-        "🚨 EMERGENCY ALERT 🚨%0A" +
-        "Possible accident detected.%0A" +
-        "Live Location:%0A" + mapLink;
+          let phone1 = "+917028590512"; // sakshi
 
-      let phone = "91XXXXXXXXXX"; // emergency contact
-
-      window.location.href =
-        "https://wa.me/" + phone + "?text=" + message;
-
-    }, function() {
-      alert("Location permission required!");
-    });
+          window.location.href =
+            "https://wa.me/" + phone1 + "?text=" + message;
+        },
+        function() {
+          alert("Location permission is required to send alert.");
+        }
+      );
+    } else {
+      alert("Geolocation not supported on this device.");
+    }
   </script>
 </body>
 </html>
